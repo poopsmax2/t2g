@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  t2g-app:
+    build: .
+    container_name: t2g-torrent-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+    volumes:
+      # Монтируем директории для персистентного хранения
+      - ./downloads:/app/downloads
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Опциональный сервис для мониторинга логов
+  t2g-logs:
+    image: alpine:latest
+    container_name: t2g-logs
+    depends_on:
+      - t2g-app
+    command: /bin/sh -c "echo 'T2G App is running. Check logs with: docker-compose logs -f t2g-app'"
+    restart: "no"
+
+volumes:
+  downloads:
+  uploads:

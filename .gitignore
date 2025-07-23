@@ -11,6 +11,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Docker volumes
+downloads/
+uploads/
+
 # Runtime data
 pids
 *.pid
