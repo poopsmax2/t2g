@@ -59,41 +59,12 @@ PORT=3000
 
 ### 4. Run the Application
 
-#### Option A: Local Development
-
 ```bash
 # Development mode (with auto-restart)
 npm run dev
 
 # Production mode
 npm start
-```
-
-#### Option B: Docker (Recommended for Production)
-
-**Quick Start with Script:**
-```bash
-# Automated setup and launch
-./start-docker.sh
-```
-
-> 📖 **Подробное руководство по Docker**: [DOCKER.md](./DOCKER.md)
-
-**Manual Setup:**
-```bash
-# 1. Copy environment file
-cp .env.docker .env
-
-# 2. Edit .env with your Google OAuth credentials
-# GOOGLE_CLIENT_ID=your_actual_client_id
-# GOOGLE_CLIENT_SECRET=your_actual_client_secret
-# SESSION_SECRET=your_random_32_char_secret
-
-# 3. Build and run with Docker Compose
-docker-compose up --build
-
-# Or run in background
-docker-compose up -d --build
 ```
 
 The application will be available at `http://localhost:3000`
@@ -103,12 +74,6 @@ The application will be available at `http://localhost:3000`
 ```bash
 # Run all tests
 npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage report
-npm run test:coverage
 ```
 
 ## Usage
@@ -164,85 +129,16 @@ t2g/
 - **Google APIs**: Google Drive API v3
 - **Frontend**: Vanilla JavaScript, CSS3, Font Awesome
 - **File Upload**: Multer
-- **Testing**: Jest, Supertest, JSDOM
+- **Testing**: Jest, Supertest
 
-## Docker Deployment
-
-### Docker Commands
-
-```bash
-# Build the Docker image
-docker build -t t2g-app .
-
-# Run the container
-docker run -d \
-  --name t2g-container \
-  -p 3000:3000 \
-  -e GOOGLE_CLIENT_ID="your_client_id" \
-  -e GOOGLE_CLIENT_SECRET="your_client_secret" \
-  -e SESSION_SECRET="your_session_secret" \
-  -v $(pwd)/downloads:/app/downloads \
-  -v $(pwd)/uploads:/app/uploads \
-  t2g-app
-
-# Using Docker Compose (recommended)
-docker-compose up -d --build
-
-# View logs
-docker-compose logs -f t2g-app
-
-# Stop the application
-docker-compose down
-
-# Update and restart
-docker-compose down
-docker-compose up -d --build
-```
-
-### Docker Environment Variables
-
-Create a `.env` file with your configuration:
-
-```env
-GOOGLE_CLIENT_ID=your_google_client_id_here
-GOOGLE_CLIENT_SECRET=your_google_client_secret_here
-SESSION_SECRET=your_random_session_secret_minimum_32_characters_long
-PORT=3000
-NODE_ENV=production
-```
-
-### Docker Features
-
-- ✅ **Multi-stage build** for optimized image size
-- ✅ **Non-root user** for enhanced security
-- ✅ **Health checks** for container monitoring
-- ✅ **Persistent volumes** for downloads/uploads
-- ✅ **Auto-restart** policy
-- ✅ **Environment variables** configuration
-
-## Production Deployment
+## Deployment
 
 For production deployment:
 
-1. **Docker (Recommended)**:
-   ```bash
-   # Clone repository
-   git clone <repository-url>
-   cd t2g
-   
-   # Setup environment
-   cp .env.docker .env
-   # Edit .env with your credentials
-   
-   # Deploy with Docker Compose
-   docker-compose up -d --build
-   ```
-
-2. **Traditional Deployment**:
-   - Set up environment variables on your hosting platform
-   - Ensure HTTPS is enabled
-   - Update OAuth redirect URIs in Google Cloud Console
-   - Consider using a process manager like PM2
+1. Set up environment variables on your hosting platform
+2. Ensure HTTPS is enabled  
+3. Update OAuth redirect URIs in Google Cloud Console
+4. Consider using a process manager like PM2
 
 ## Troubleshooting
 
@@ -252,29 +148,6 @@ For production deployment:
 2. **Google Drive Upload Fails**: Check if Drive API is enabled and permissions granted
 3. **Torrents Not Starting**: Ensure WebTorrent can connect to peers (firewall/NAT issues)
 4. **Session Issues**: Verify SESSION_SECRET is set and consistent
-
-### Docker Issues
-
-1. **Container Won't Start**: Check environment variables in `.env` file
-2. **Permission Denied**: Ensure downloads/uploads directories have correct permissions
-3. **Port Already in Use**: Change port mapping in docker-compose.yml or stop conflicting services
-4. **Build Fails**: Ensure Docker has enough disk space and memory allocated
-
-```bash
-# Check container logs
-docker-compose logs t2g-app
-
-# Check container status
-docker-compose ps
-
-# Restart container
-docker-compose restart t2g-app
-
-# Rebuild from scratch
-docker-compose down
-docker system prune -f
-docker-compose up --build
-```
 
 ### Development Tips
 
@@ -299,10 +172,9 @@ MIT License - see LICENSE file for details
 
 The application includes comprehensive tests covering:
 
-- **39 Tests Total** with 100% pass rate ✅
-- **Server Tests**: API routes, authentication, validation (15 tests)
-- **Frontend Tests**: UI functions, form validation, DOM manipulation (15 tests)  
-- **Integration Tests**: Complete user workflows, file uploads, Google Drive integration (9 tests)
+- **Server Tests**: API routes, authentication, validation
+- **Frontend Tests**: UI functions, form validation, DOM manipulation  
+- **Integration Tests**: Complete user workflows, file uploads, Google Drive integration
 
 ### Test Coverage
 - ✅ Google OAuth authentication flow
@@ -310,13 +182,10 @@ The application includes comprehensive tests covering:
 - ✅ Google Drive API integration
 - ✅ Real-time torrent status updates
 - ✅ Error handling and edge cases
-- ✅ Security (XSS protection, input validation)
-- ✅ Performance (API response times)
 
 Run tests with:
 ```bash
-npm test                    # Run all tests
-npm run test:coverage      # Run with coverage report
+npm test
 ```
 
 ## Disclaimer

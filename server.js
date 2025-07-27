@@ -258,11 +258,12 @@ async function uploadTorrentToGoogleDrive(torrent, accessToken) {
 fs.ensureDirSync('./downloads');
 fs.ensureDirSync('./uploads');
 
-// Export app for testing, only start server if not in test mode
-if (require.main === module) {
+// Only start server if not running in test environment or being required as module
+if (require.main === module && process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
+// Export app for testing and other modules
 module.exports = app;
