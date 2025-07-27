@@ -69,6 +69,13 @@ npm start
 
 The application will be available at `http://localhost:3000`
 
+### 5. Run Tests
+
+```bash
+# Run all tests
+npm test
+```
+
 ## Usage
 
 1. **Sign In**: Click "Sign in with Google" on the homepage
@@ -122,13 +129,14 @@ t2g/
 - **Google APIs**: Google Drive API v3
 - **Frontend**: Vanilla JavaScript, CSS3, Font Awesome
 - **File Upload**: Multer
+- **Testing**: Jest, Supertest
 
 ## Deployment
 
 For production deployment:
 
 1. Set up environment variables on your hosting platform
-2. Ensure HTTPS is enabled
+2. Ensure HTTPS is enabled  
 3. Update OAuth redirect URIs in Google Cloud Console
 4. Consider using a process manager like PM2
 
@@ -159,6 +167,26 @@ MIT License - see LICENSE file for details
 3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
+
+## Testing
+
+The application includes comprehensive tests covering:
+
+- **Server Tests**: API routes, authentication, validation
+- **Frontend Tests**: UI functions, form validation, DOM manipulation  
+- **Integration Tests**: Complete user workflows, file uploads, Google Drive integration
+
+### Test Coverage
+- ✅ Google OAuth authentication flow
+- ✅ Magnet link and torrent file validation
+- ✅ Google Drive API integration
+- ✅ Real-time torrent status updates
+- ✅ Error handling and edge cases
+
+Run tests with:
+```bash
+npm test
+```
 
 ## Disclaimer
 
